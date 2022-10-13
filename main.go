@@ -8,10 +8,10 @@ import (
 	"os"
 	"path"
 
+	"github.com/groob/plist"
 	"go.mozilla.org/pkcs7"
 	"go.step.sm/cli-utils/ui"
 	"go.step.sm/crypto/pemutil"
-	"howett.net/plist"
 )
 
 var (
@@ -38,8 +38,7 @@ func main() {
 
 	// decode the plist contents
 	var r map[string]interface{}
-	decoder := plist.NewDecoder(f)
-	decoder.Format = plist.XMLFormat
+	decoder := plist.NewXMLDecoder(f)
 	err = decoder.Decode(&r)
 	fatalIf(err)
 

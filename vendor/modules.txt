@@ -5,6 +5,9 @@ filippo.io/edwards25519/field
 # github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e
 ## explicit
 github.com/chzyer/readline
+# github.com/groob/plist v0.0.0-20220217120414-63fa881b19a5
+## explicit; go 1.14
+github.com/groob/plist
 # github.com/manifoldco/promptui v0.9.0
 ## explicit; go 1.12
 github.com/manifoldco/promptui
@@ -48,6 +51,3 @@ golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# howett.net/plist v1.0.0
-## explicit; go 1.12
-howett.net/plist

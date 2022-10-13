@@ -3,10 +3,10 @@ module github.com/hslatman/poc-sign-mobileconfig
 go 1.18
 
 require (
+	github.com/groob/plist v0.0.0-20220217120414-63fa881b19a5
 	go.mozilla.org/pkcs7 v0.0.0-20210826202110-33d05740a352
 	go.step.sm/cli-utils v0.7.5
 	go.step.sm/crypto v0.21.0
-	howett.net/plist v1.0.0
 )
 
 require (
