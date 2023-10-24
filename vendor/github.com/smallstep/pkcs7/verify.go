@@ -210,8 +210,13 @@ func parseSignedData(data []byte) (*PKCS7, error) {
 	// Compound octet string
 	if compound.IsCompound {
 		if compound.Tag == 4 {
-			if _, err = asn1.Unmarshal(compound.Bytes, &content); err != nil {
-				return nil, err
+			for len(compound.Bytes) > 0 {
+				var cdata asn1.RawValue
+				if _, err = asn1.Unmarshal(compound.Bytes, &cdata); err != nil {
+					return nil, err
+				}
+				content = append(content, cdata.Bytes...)
+				compound.Bytes = compound.Bytes[len(cdata.FullBytes):]
 			}
 		} else {
 			content = compound.Bytes
@@ -278,13 +283,13 @@ func getSignatureAlgorithm(digestEncryption, digest pkix.AlgorithmIdentifier) (x
 		digestEncryption.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA384),
 		digestEncryption.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA512):
 		switch {
-		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA1):
+		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA1), digest.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA1):
 			return x509.SHA1WithRSA, nil
-		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA256):
+		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA256), digest.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA256):
 			return x509.SHA256WithRSA, nil
-		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA384):
+		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA384), digest.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA384):
 			return x509.SHA384WithRSA, nil
-		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA512):
+		case digest.Algorithm.Equal(OIDDigestAlgorithmSHA512), digest.Algorithm.Equal(OIDEncryptionAlgorithmRSASHA512):
 			return x509.SHA512WithRSA, nil
 		default:
 			return -1, fmt.Errorf("pkcs7: unsupported digest %q for encryption algorithm %q",

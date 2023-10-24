@@ -9,7 +9,7 @@ import (
 	"path"
 
 	"github.com/groob/plist"
-	"go.mozilla.org/pkcs7"
+	"github.com/smallstep/pkcs7"
 	"go.step.sm/cli-utils/ui"
 	"go.step.sm/crypto/pemutil"
 )
